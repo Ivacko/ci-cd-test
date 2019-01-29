@@ -1,0 +1,19 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo pre_build started `date`
+      - echo cd ${CODEBUILD_SRC_DIR} && ls -a
+      # - echo $CODEBUILD_SOURCE_VERSION
+      # - echo $CODEBUILD_SOURCE_REPO_URL
+      # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
+      # - echo $CODEBUILD_WEBHOOK_TRIGGER
+      - GIT_HASH=`cat git-commit-hash`
+      - echo $GIT_HASH
+      - GIT_BRANCH=`cat git-branch`
+      - echo $GIT_BRANCH
+  build:
+    commands:
+      - echo build started `date`
+      - mkdir be_build
+      - cd be_build && touch be_build.txt
