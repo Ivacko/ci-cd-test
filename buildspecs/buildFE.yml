@@ -2,7 +2,8 @@ version: 0.2
 phases:
   install:
     commands:
-      - npm ci
+      - echo install started `date`
+      # - npm ci
   pre_build:
     commands:
       - echo pre_build started `date`
@@ -12,8 +13,6 @@ phases:
       # - echo $CODEBUILD_SOURCE_REPO_URL
       # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
       # - echo $CODEBUILD_WEBHOOK_TRIGGER
-      - echo run tests
-      - npm run test
   build:
     commands:
       - echo build started `date`
