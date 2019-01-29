@@ -6,6 +6,8 @@ phases:
   pre_build:
     commands:
       - echo pre_build started `date`
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay&
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
       # - echo cd ${CODEBUILD_SRC_DIR} && ls -a
       # - echo $CODEBUILD_SOURCE_VERSION
       # - echo $CODEBUILD_SOURCE_REPO_URL
