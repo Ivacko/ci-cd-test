@@ -1,0 +1,39 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo install
+  pre_build:
+    commands:
+      - echo pre_build started `date`
+      # - echo cd ${CODEBUILD_SRC_DIR} && ls -a
+      # - echo $CODEBUILD_SOURCE_VERSION
+      # - echo $CODEBUILD_SOURCE_REPO_URL
+      # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
+      # - echo $CODEBUILD_WEBHOOK_TRIGGER
+      - GIT_HASH=$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo $GIT_HASH >> git-commit-hash 2>&1
+      - echo run tests
+      - npm ci
+      - npm run test
+  build:
+    commands:
+      - echo build started `date`
+      - TRIGGER=$(echo $CODEBUILD_SOURCE_VERSION | cut -d/ -f1)
+      - |
+        if [ "$TRIGGER" != "pr" ] ; then
+          if [ !-z "$CODEBUILD_WEBHOOK_TRIGGER" ] ; then
+            BRANCH=$(echo $CODEBUILD_SOURCE_VERSION | cut -d/ -f2)
+          fi
+
+          if [ "$BRANCH" != "master" ] && [ "$BRANCH" != "staging_ci" ] && [ "$BRANCH" != "uat" ] ; then
+            echo "Selected branch is not supported.
+            To start build manually use 'BRANCH' env par.
+            Allowed values are master, staging_ci, uat."
+            exit 1
+          fi
+          echo packaging and uploading tested version of the app for build stage
+          echo $BRANCH_TITLE >> git-branch 2>&1
+          zip -r app * .
+          aws s3 cp app.zip s3://ivacko.app-tested-versions
+        fi
