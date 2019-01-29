@@ -24,7 +24,7 @@ phases:
       - TRIGGER=$(echo $CODEBUILD_SOURCE_VERSION | cut -d/ -f1)
       - |
         if [ "$TRIGGER" != "pr" ] ; then
-          if [ !-z "$CODEBUILD_WEBHOOK_TRIGGER" ] ; then
+          if [ ! -z "$CODEBUILD_WEBHOOK_TRIGGER" ] ; then
             BRANCH=$(echo $CODEBUILD_SOURCE_VERSION | cut -d/ -f2)
           fi
 
