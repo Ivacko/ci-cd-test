@@ -18,3 +18,11 @@ phases:
       - echo build started `date`
       - mkdir be_build
       - cd be_build && touch be_build.txt
+      - cd ${$CODEBUILD_SRC_DIR} && zip -rq be_build * .
+
+artifacts:
+  secondary-artifacts:
+    buildBEOutput:
+      base-directory: $CODEBUILD_SRC_DIR
+      files:
+        - be_build.zip

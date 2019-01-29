@@ -18,3 +18,11 @@ phases:
       - echo build started `date`
       - mkdir fe_build
       - cd fe_build && touch fe_build.txt
+      - cd ${$CODEBUILD_SRC_DIR} && zip -rq fe_build * .
+
+artifacts:
+  secondary-artifacts:
+    buildFEOutput:
+      base-directory: $CODEBUILD_SRC_DIR
+      files:
+        - fe_build.zip
