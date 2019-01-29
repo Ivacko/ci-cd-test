@@ -1,16 +1,19 @@
 version: 0.2
 phases:
+  install:
+    commands:
+      - npm ci
   pre_build:
     commands:
       - echo pre_build started `date`
-      - echo $CODEBUILD_SRC_DIR
-      - echo cd ${CODEBUILD_SRC_DIR} && ls -a
+      # - echo $CODEBUILD_SRC_DIR
+      # - echo cd ${CODEBUILD_SRC_DIR} && ls -a
       # - echo $CODEBUILD_SOURCE_VERSION
       # - echo $CODEBUILD_SOURCE_REPO_URL
       # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
       # - echo $CODEBUILD_WEBHOOK_TRIGGER
       - echo run tests
-      - cd ${CODEBUILD_SRC_DIR} && npm run test
+      - npm run test
   build:
     commands:
       - echo build started `date`
