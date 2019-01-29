@@ -10,7 +10,7 @@ phases:
       # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
       # - echo $CODEBUILD_WEBHOOK_TRIGGER
       - echo run tests
-      - npm run test
+      - cd ${CODEBUILD_SRC_DIR} && npm run test
   build:
     commands:
       - echo build started `date`
