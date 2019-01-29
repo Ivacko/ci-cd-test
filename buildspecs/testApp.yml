@@ -36,6 +36,6 @@ phases:
           fi
           echo packaging and uploading tested version of the app for build stage
           echo $BRANCH_TITLE >> git-branch 2>&1
-          zip -r app * .
+          zip -rq app * .
           aws s3 cp app.zip s3://ivacko.app-tested-versions
         fi
