@@ -21,8 +21,8 @@ phases:
       - cd $CODEBUILD_SRC_DIR && zip -rq fe_build * .
 
 artifacts:
-  secondary-artifacts:
-    buildFEOutput:
-      base-directory: $CODEBUILD_SRC_DIR
-      files:
-        - fe_build.zip
+  name: buildFEOutput
+  base-directory: $CODEBUILD_SRC_DIR
+  files:
+    - fe_build.zip
+  discard-paths: yes

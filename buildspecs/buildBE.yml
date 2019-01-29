@@ -21,8 +21,8 @@ phases:
       - cd $CODEBUILD_SRC_DIR && zip -rq be_build * .
 
 artifacts:
-  secondary-artifacts:
-    buildBEOutput:
-      base-directory: $CODEBUILD_SRC_DIR
-      files:
-        - be_build.zip
+  name: buildBEOutput
+  base-directory: $CODEBUILD_SRC_DIR
+  files:
+    - be_build.zip
+  discard-paths: yes
