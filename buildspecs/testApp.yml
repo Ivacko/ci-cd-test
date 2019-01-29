@@ -9,10 +9,10 @@ phases:
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay&
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
       # - echo cd ${CODEBUILD_SRC_DIR} && ls -a
-      # - echo $CODEBUILD_SOURCE_VERSION
-      # - echo $CODEBUILD_SOURCE_REPO_URL
-      # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
-      # - echo $CODEBUILD_WEBHOOK_TRIGGER
+      - echo $CODEBUILD_SOURCE_VERSION
+      - echo $CODEBUILD_SOURCE_REPO_URL
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo $CODEBUILD_WEBHOOK_TRIGGER
       - GIT_HASH=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo $GIT_HASH >> git-commit-hash 2>&1
       - echo run tests
@@ -27,6 +27,8 @@ phases:
           if [ ! -z "$CODEBUILD_WEBHOOK_TRIGGER" ] ; then
             BRANCH=$(echo $CODEBUILD_SOURCE_VERSION | cut -d/ -f2)
           fi
+
+          echo $BRANCH
 
           if [ "$BRANCH" != "master" ] && [ "$BRANCH" != "staging_ci" ] && [ "$BRANCH" != "uat" ] ; then
             echo "Selected branch is not supported.
