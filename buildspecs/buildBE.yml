@@ -18,7 +18,7 @@ phases:
       - echo build started `date`
       - mkdir be_build
       - cd be_build && touch be_build.txt
-      - cd ${$CODEBUILD_SRC_DIR} && zip -rq be_build * .
+      - cd $CODEBUILD_SRC_DIR && zip -rq be_build * .
 
 artifacts:
   secondary-artifacts:
