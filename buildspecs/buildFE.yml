@@ -3,7 +3,8 @@ phases:
   pre_build:
     commands:
       - echo pre_build started `date`
-      # - echo cd ${CODEBUILD_SRC_DIR} && ls -a
+      - echo $CODEBUILD_SRC_DIR
+      - echo cd ${CODEBUILD_SRC_DIR} && ls -a
       # - echo $CODEBUILD_SOURCE_VERSION
       # - echo $CODEBUILD_SOURCE_REPO_URL
       # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
