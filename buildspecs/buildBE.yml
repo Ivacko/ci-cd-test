@@ -7,6 +7,10 @@ phases:
   pre_build:
     commands:
       - echo pre_build started `date`
+      - GIT_HASH_TO_BUILD=`cat git-commit-hash`
+      - echo Commit hash is $GIT_HASH
+      - GIT_BRANCH=`cat git-branch`
+      - echo Commit Branch is $GIT_BRANCH
       # - echo $CODEBUILD_SRC_DIR
       # - echo $CODEBUILD_SOURCE_VERSION
       # - echo $CODEBUILD_SOURCE_REPO_URL

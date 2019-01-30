@@ -1,17 +1,20 @@
 version: 0.2
 phases:
+  install:
+    commands:
+      - echo install started `date`
+      # - npm i serverless
   pre_build:
     commands:
       - echo pre_build started `date`
-      - echo cd ${CODEBUILD_SRC_DIR} && ls -a
+      - GIT_HASH_TO_BUILD=`cat git-commit-hash`
+      - echo Commit hash is:$GIT_HASH
+      - GIT_BRANCH=`cat git-branch`
+      - echo Commit Branch is $GIT_BRANCH
       # - echo $CODEBUILD_SOURCE_VERSION
       # - echo $CODEBUILD_SOURCE_REPO_URL
       # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
       # - echo $CODEBUILD_WEBHOOK_TRIGGER
-      - GIT_HASH=`cat git-commit-hash`
-      - echo $GIT_HASH
-      - GIT_BRANCH=`cat git-branch`
-      - echo $GIT_BRANCH
   build:
     commands:
       - echo build started `date`

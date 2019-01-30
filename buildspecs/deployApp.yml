@@ -10,6 +10,10 @@ phases:
   pre_build:
     commands:
       - echo pre_build started `date`
+      - GIT_HASH_TO_BUILD=`cat git-commit-hash`
+      - echo Commit hash is:$GIT_HASH
+      - GIT_BRANCH=`cat git-branch`
+      - echo Commit Branch is $GIT_BRANCH
       - cd $CODEBUILD_SRC_DIR_buildFEOutput && ls -a
       - cd $CODEBUILD_SRC_DIR_buildBEOutput && ls -a
       - cd $CODEBUILD_SRC_DIR && ls -a
@@ -17,17 +21,13 @@ phases:
       # - echo $CODEBUILD_SOURCE_REPO_URL
       # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
       # - echo $CODEBUILD_WEBHOOK_TRIGGER
-      - GIT_HASH_TO_BUILD=`cat git-commit-hash`
-      - echo $GIT_HASH
-      - GIT_BRANCH=`cat git-branch`
-      - echo $GIT_BRANCH
   build:
     commands:
       - echo build started `date`
       - echo upload artifact to S3
       - echo create application version on EB
       - echo update EB env to deploy new version
-      - LATEST_GIT_HASH = `git ls-remote https://$GIT_OAUTH_TOKEN@$GIT_REPO_URL refs/heads/$GIT_BRANCH | cut -f 1`
+      - LATEST_GIT_HASH=`git ls-remote https://$GIT_OAUTH_TOKEN@$GIT_REPO_URL refs/heads/$GIT_BRANCH | cut -f 1`
       - echo $LATEST_GIT_HASH
       - echo $GIT_HASH_TO_BUILD
       - |
