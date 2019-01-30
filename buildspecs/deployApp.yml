@@ -31,7 +31,7 @@ phases:
       - echo $LATEST_GIT_HASH
       - echo $GIT_HASH_TO_BUILD
       - |
-        if [ "$GIT_HASH_TO_BUILD" = "$LATEST_GIT_HASH"] ; then
+        if [ "$GIT_HASH_TO_BUILD" = "$LATEST_GIT_HASH" ] ; then
           echo Deploy App
         else
           echo There is new version that will be deployed soon
