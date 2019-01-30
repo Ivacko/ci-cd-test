@@ -20,11 +20,11 @@ phases:
   build:
     commands:
       - echo build started `date`
-      - TRIGGER=`$CODEBUILD_SOURCE_VERSION | cut -d/ -f1`
+      - TRIGGER=$(echo $CODEBUILD_SOURCE_VERSION | cut -d/ -f1)
       - |
         if [ "$TRIGGER" != "pr" ] ; then
           if [ ! -z "$CODEBUILD_WEBHOOK_TRIGGER" ] ; then
-            BRANCH=`$CODEBUILD_WEBHOOK_TRIGGER | cut -d/ -f2`
+            BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | cut -d/ -f2)
           fi
 
           if [ "$BRANCH" != "master" ] && [ "$BRANCH" != "staging_ci" ] && [ "$BRANCH" != "uat" ] ; then
