@@ -20,7 +20,10 @@ phases:
       - cd be_build && touch be_build.txt && zip -rq be_build * .
 
 artifacts:
-  name: buildBEOutput
   files:
     - $CODEBUILD_SRC_DIR/be_build/be_build.zip
   discard-paths: yes
+  secondary-artifacts:
+    buildBEOutput:
+      files:
+        - $CODEBUILD_SRC_DIR/be_build/be_build.zip
