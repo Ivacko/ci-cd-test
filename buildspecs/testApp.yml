@@ -9,13 +9,12 @@ phases:
   pre_build:
     commands:
       - echo pre_build started `date`
-      # - echo cd ${CODEBUILD_SRC_DIR} && ls -a
       - echo $CODEBUILD_SOURCE_VERSION
       - echo $CODEBUILD_SOURCE_REPO_URL
       - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo $CODEBUILD_WEBHOOK_TRIGGER
       - GIT_HASH=$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - $GIT_HASH >> git-commit-hash 2>&1
+      - echo $GIT_HASH >> git-commit-hash 2>&1
       - echo run tests
       # - npm run test -- --silent
   build:
@@ -35,7 +34,7 @@ phases:
             exit 1
           fi
           echo packaging and uploading tested version of the app for build stage
-          $BRANCH >> git-branch 2>&1
+          echo $BRANCH >> git-branch 2>&1
           zip -rq --exclude=*node_modules* app * .
           aws s3 cp app.zip s3://ivacko.ci-cd-pipeline/testedVersions/
         fi
