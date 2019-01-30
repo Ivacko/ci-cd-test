@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    REPO_URL: 'github.com/ivacko/aws-codebuild-docker.git'
+    GIT_REPO_URL: 'github.com/ivacko/ci-cd-test.git'
   parameter-store:
     GIT_OAUTH_TOKEN: '/git/oauth/token'
 
@@ -27,7 +27,7 @@ phases:
       - echo upload artifact to S3
       - echo create application version on EB
       - echo update EB env to deploy new version
-      - LATEST_GIT_HASH = `git ls-remote https://$GIT_OAUTH_TOKEN@$REPO_URL refs/heads/$GIT_BRANCH | cut -f 1`
+      - LATEST_GIT_HASH = `git ls-remote https://$GIT_OAUTH_TOKEN@$GIT_REPO_URL refs/heads/$GIT_BRANCH | cut -f 1`
       - echo $LATEST_GIT_HASH
       - echo $GIT_HASH_TO_BUILD
       - |
