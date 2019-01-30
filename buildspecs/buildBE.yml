@@ -8,7 +8,6 @@ phases:
     commands:
       - echo pre_build started `date`
       # - echo $CODEBUILD_SRC_DIR
-      # - echo cd ${CODEBUILD_SRC_DIR} && ls -a
       # - echo $CODEBUILD_SOURCE_VERSION
       # - echo $CODEBUILD_SOURCE_REPO_URL
       # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
@@ -21,10 +20,6 @@ phases:
 
 artifacts:
   files:
-    - $CODEBUILD_SRC_DIR/*
-  # name: buildBEOutput
+    - 'be_build/*'
+  name: buildBEOutput
   discard-paths: yes
-  secondary-artifacts:
-    buildBEOutput:
-      files:
-        - $CODEBUILD_SRC_DIR/be_build/be_build.zip
