@@ -1,4 +1,11 @@
 version: 0.2
+
+env:
+  variables:
+    REPO_URL: 'github.com/ivacko/aws-codebuild-docker.git'
+  parameter-store:
+    GIT_OAUTH_TOKEN: '/git/oauth/token'
+
 phases:
   pre_build:
     commands:
@@ -10,11 +17,22 @@ phases:
       # - echo $CODEBUILD_SOURCE_REPO_URL
       # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
       # - echo $CODEBUILD_WEBHOOK_TRIGGER
-      - GIT_HASH=`cat git-commit-hash`
+      - GIT_HASH_TO_BUILD=`cat git-commit-hash`
       - echo $GIT_HASH
       - GIT_BRANCH=`cat git-branch`
       - echo $GIT_BRANCH
   build:
     commands:
       - echo build started `date`
-      - echo deploy app
+      - echo upload artifact to S3
+      - echo create application version on EB
+      - echo update EB env to deploy new version
+      - LATEST_GIT_HASH = `git ls-remote https://$GIT_OAUTH_TOKEN@$REPO_URL refs/heads/$GIT_BRANCH | cut -f 1`
+      - echo $LATEST_GIT_HASH
+      - echo $GIT_HASH_TO_BUILD
+      - |
+        if [ "$GIT_HASH_TO_BUILD" = "$LATEST_GIT_HASH"] ; then
+          echo Deploy App
+        else
+          echo There is new version that will be deployed soon
+        fi
