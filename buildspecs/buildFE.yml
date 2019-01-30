@@ -20,11 +20,11 @@ phases:
       - cd fe_build && touch fe_build.txt && zip -rq fe_build * .
 
 artifacts:
-  files:
-    - $CODEBUILD_SRC_DIR/fe_build/fe_build.zip
-  name: buildFEOutput
+  # files:
+  #   - $CODEBUILD_SRC_DIR/fe_build/fe_build.zip
+  # name: buildFEOutput
   discard-paths: yes
-  # secondary-artifacts:
-  #   buildFEOutput:
-  #     files:
-  #       - $CODEBUILD_SRC_DIR/fe_build/fe_build.zip
+  secondary-artifacts:
+    buildFEOutput:
+      files:
+        - $CODEBUILD_SRC_DIR/fe_build/fe_build.zip
