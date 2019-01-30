@@ -17,12 +17,11 @@ phases:
     commands:
       - echo build started `date`
       - mkdir fe_build
-      - cd fe_build && touch fe_build.txt
-      - cd $CODEBUILD_SRC_DIR && zip -rq fe_build * .
+      - cd fe_build && touch fe_build.txt && zip -rq fe_build * .
 
 artifacts:
-  name: buildFEOutput
-  base-directory: $CODEBUILD_SRC_DIR
+  name: buildBEOutput
+  base-directory: $CODEBUILD_SRC_DIR/fe_build
   files:
     - fe_build.zip
   discard-paths: yes
