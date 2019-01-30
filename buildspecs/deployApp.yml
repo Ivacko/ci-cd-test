@@ -3,8 +3,9 @@ phases:
   pre_build:
     commands:
       - echo pre_build started `date`
-      - echo cd ${CODEBUILD_SRC_DIR_buildFEOutputs} && ls -a
-      - echo cd ${CODEBUILD_SRC_DIR_buildBEOutputs} && ls -a
+      - echo cd ${CODEBUILD_SRC_DIR} && ls -a
+      - echo cd ${CODEBUILD_SRC_DIR_buildFEOutput} && ls -a
+      - echo cd ${CODEBUILD_SRC_DIR_buildBEOutput} && ls -a
       # - echo $CODEBUILD_SOURCE_VERSION
       # - echo $CODEBUILD_SOURCE_REPO_URL
       # - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
@@ -16,5 +17,4 @@ phases:
   build:
     commands:
       - echo build started `date`
-      - mkdir be_build
-      - cd be_build && touch be_build.txt
+      - echo deploy app

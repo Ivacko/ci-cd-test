@@ -15,5 +15,4 @@ phases:
   build:
     commands:
       - echo build started `date`
-      - mkdir be_build
-      - cd be_build && touch be_build.txt
+      - echo deploy serverless
