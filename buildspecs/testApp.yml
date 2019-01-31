@@ -1,4 +1,11 @@
 version: 0.2
+
+env:
+  parameter-store:
+    S3_BUCKET: '/ci-cd/s3bucket'
+    GIT_REPO_URL: '/ci-cd/github/repo'
+    GIT_OAUTH_TOKEN: '/ci-cd/github/oauth/token'
+
 phases:
   install:
     commands:
@@ -33,8 +40,10 @@ phases:
             Allowed values are master, staging_ci, uat."
             exit 1
           fi
+
           echo packaging and uploading tested version of the app for build stage
           echo $BRANCH >> git-branch 2>&1
-          zip -rq --exclude=*node_modules* app * .
-          aws s3 cp app.zip s3://ivacko.ci-cd-pipeline/testedVersions/
+
+          zip -rq --exclude=*node_modules* $BRANCH * .
+          aws s3 cp $BRANCH.zip s3://$S3_BUCKET/$BRANCH-testedVersion/$BRANCH.zip
         fi

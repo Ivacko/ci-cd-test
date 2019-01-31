@@ -1,10 +1,9 @@
 version: 0.2
 
 env:
-  variables:
-    GIT_REPO_URL: 'github.com/ivacko/ci-cd-test.git'
   parameter-store:
-    GIT_OAUTH_TOKEN: '/git/oauth/token'
+    GIT_REPO_URL: '/ci-cd/github/repo'
+    GIT_OAUTH_TOKEN: '/ci-cd/github/oauth/token'
 
 phases:
   pre_build:
@@ -34,5 +33,6 @@ phases:
         if [ "$GIT_HASH_TO_BUILD" = "$LATEST_GIT_HASH" ] ; then
           echo Deploy App
         else
-          echo There is new version that will be deployed soon
+          echo "There is new version of the code that is or will be deployed.
+          Use EB to deploy older code versions."
         fi
