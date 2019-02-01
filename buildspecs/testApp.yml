@@ -55,5 +55,5 @@ phases:
 
           zip -rq --exclude=*node_modules* $BRANCH * .
           zip -rq --exclude=*node_modules* $BUILD_ENVIRONMENT * .
-          aws s3 cp $BUILD_ENVIRONMENT.zip s3://$S3_BUCKET/$BUILD_ENVIRONMENT-testedVersion/$BUILD_ENVIRONMENT.zip
+          aws s3 cp $BUILD_ENVIRONMENT.zip s3://$S3_BUCKET/$BUILD_ENVIRONMENT-testedVersion/
         fi
