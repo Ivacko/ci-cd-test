@@ -3,27 +3,21 @@ version: 0.2
 env:
   parameter-store:
     S3_BUCKET: '/ci-cd/s3bucket'
-    GIT_REPO_URL: '/ci-cd/github/repo'
-    GIT_OAUTH_TOKEN: '/ci-cd/github/oauth/token'
 
 phases:
   install:
     commands:
-      - echo install
+      - echo install started `date`
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay&
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
-      # - npm ci
+      - npm ci
   pre_build:
     commands:
       - echo pre_build started `date`
-      - echo $CODEBUILD_SOURCE_VERSION
-      - echo $CODEBUILD_SOURCE_REPO_URL
-      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
-      - echo $CODEBUILD_WEBHOOK_TRIGGER
       - GIT_HASH=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo $GIT_HASH >> git-commit-hash 2>&1
-      - echo run tests
-      # - npm run test -- --silent
+      - cp -pr git-commit-hash ./front-end
+      - npm run test -- --silent
   build:
     commands:
       - echo build started `date`
@@ -44,6 +38,21 @@ phases:
           echo packaging and uploading tested version of the app for build stage
           echo $BRANCH >> git-branch 2>&1
 
+          - |
+            if [ "$BRANCH" = "master" ] ; then
+              BUILD_ENVIRONMENT=prod
+            fi
+
+            if [ "$BRANCH" = "staging_ci" ] ; then
+              BUILD_ENVIRONMENT=staging
+            fi
+
+            if [ "$BRANCH" = "uat" ] ; then
+              BUILD_ENVIRONMENT=uat
+            fi
+
+          echo $BUILD_ENVIRONMENT >> build-environment 2>&1
+
           zip -rq --exclude=*node_modules* $BRANCH * .
-          aws s3 cp $BRANCH.zip s3://$S3_BUCKET/$BRANCH-testedVersion/$BRANCH.zip
+          aws s3 cp $BRANCH.zip s3://$S3_BUCKET/$BUILD_ENVIRONMENT-testedVersion/$BRANCH.zip --metadata '{"githash":$GIT_HASH}'
         fi

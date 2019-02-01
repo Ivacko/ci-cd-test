@@ -26,5 +26,5 @@ phases:
 artifacts:
   files:
     - 'be_build/*'
-  name: buildBEOutput
+  name: backEndBuild
   discard-paths: yes
