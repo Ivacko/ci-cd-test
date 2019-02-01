@@ -38,18 +38,17 @@ phases:
           echo packaging and uploading tested version of the app for build stage
           echo $BRANCH >> git-branch 2>&1
 
-          - |
-            if [ "$BRANCH" = "master" ] ; then
-              BUILD_ENVIRONMENT=prod
-            fi
+          if [ "$BRANCH" = "master" ] ; then
+            BUILD_ENVIRONMENT=prod
+          fi
 
-            if [ "$BRANCH" = "staging_ci" ] ; then
-              BUILD_ENVIRONMENT=staging
-            fi
+          if [ "$BRANCH" = "staging_ci" ] ; then
+            BUILD_ENVIRONMENT=staging
+          fi
 
-            if [ "$BRANCH" = "uat" ] ; then
-              BUILD_ENVIRONMENT=uat
-            fi
+          if [ "$BRANCH" = "uat" ] ; then
+            BUILD_ENVIRONMENT=uat
+          fi
 
           echo $BUILD_ENVIRONMENT >> build-environment 2>&1
 
