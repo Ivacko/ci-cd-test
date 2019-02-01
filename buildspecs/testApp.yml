@@ -54,5 +54,5 @@ phases:
           echo $BUILD_ENVIRONMENT >> build-environment 2>&1
 
           zip -rq --exclude=*node_modules* $BRANCH * .
-          aws s3 cp $BRANCH.zip s3://$S3_BUCKET/$BUILD_ENVIRONMENT-testedVersion/$BRANCH.zip --metadata '{"githash":$GIT_HASH}'
+          aws s3 cp $BRANCH.zip s3://$S3_BUCKET/$BUILD_ENVIRONMENT-testedVersion/$BRANCH.zip --metadata '{"githash":"$GIT_HASH"}'
         fi
